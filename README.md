@@ -12,6 +12,7 @@ The program calculates the position of a particle using the kinematic equations.
   - Calculate max speed,height and range.
   - Tracking of the particle when it passes the bounds of the window.
   - Adding more partices and collisions between the particles.
+  - Better Documentation 
   
 ## Demo as of 10/11/2022
 ![ProjectileSimDemo1](https://user-images.githubusercontent.com/93397918/195179007-969acf09-95f6-4c04-906b-338ad3661a91.gif)
