@@ -37,6 +37,7 @@ class ofApp : public ofBaseApp{
 		double yo = 370;
 		double angle = 30.0;
 		bool started = false;
+		int FPS;
 		ofPolyline trail;  
 };
 

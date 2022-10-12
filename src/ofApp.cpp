@@ -2,6 +2,7 @@
 #include <vector>
 //--------------------------------------------------------------
 void ofApp::setup(){
+    //Sets up the GUI with all of its components
     gui.setup();
     gui.add(ySlider.setup("Initial Height",yo,0,ofGetHeight() - 20));
     gui.add(xSlider.setup("Initial Width",xo,0,ofGetWidth()));
@@ -9,7 +10,9 @@ void ofApp::setup(){
     gui.add(vSlider.setup("Initial Velocity",vo,0,200));
     gui.add(Start.setup("Start"));
     gui.add(Reset.setup("Reset"));
-    ofSetFrameRate(165);
+    ///Sets Framerate to 165 FPS Note: This affects how fast the calculations are made
+    FPS = 165;
+    ofSetFrameRate(FPS);
     RedParticle p(xo,yo,vo,a,angle);
     particles.push_back(p);
     
@@ -17,26 +20,29 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    // updates the particles values when using the sliders
     if(!started) {
         particles[0].setX(xSlider);
         particles[0].setY(ySlider);
         particles[0].setAngle(aSlider);
         particles[0].setVel(vSlider);
     }
-
+    //When the start button is pressed the simulation starts
     if(Start) {
         started = true;
     }
-
+    
     if (started) {
+        //Calculates the seconds for the particles movement
         ticks += 1;
         seconds = ticks / 165;
         particles[0].tick(seconds);
+        //Adds the points that the particle has been to the trail
         ofPoint p(particles[0].getX(),particles[0].getY());
         trail.addVertex(p);
         
     }
-
+    //Reset button is pressed
     if(Reset) {
         keyPressed('r');
     }
@@ -47,17 +53,22 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    //Sets Background 
     ofColor sky(138,213,255);
     ofColor atm(211,239,255);
     ofBackgroundGradient(atm,sky,OF_GRADIENT_LINEAR);
+    //Draws the particle
     particles[0].draw();
+    //Draws the indicator text on the window
     ofSetColor(255,0,0);
     ofDrawBitmapString("x: "+to_string((int)particles[0].getX()),20,40);
     ofDrawBitmapString("y: "+to_string((int)particles[0].getY()),20,50);
     ofDrawBitmapString("vel: "+to_string((int)particles[0].getVel()),20,60);
+    //Draws the ground
     ofSetColor(51,25,0);
     ofFill();
     ofDrawRectangle(0,ofGetHeight()-20,ofGetWidth(),20);
+    //Calculates the points of the arrow and draws it
     ofSetColor(0);
     ofFill();
     if(!started) {
@@ -65,10 +76,12 @@ void ofApp::draw(){
         ofVec3f p2(particles[0].getX() + particles[0].getVel()*cos(particles[0].getAngle()*PI/180),particles[0].getY() - particles[0].getVel()*sin(particles[0].getAngle()*PI/180),0);
         ofDrawArrow(p1,p2,4);
     }
+    //Draws the trail left by the particle
     ofSetColor(ofColor::navy);
     if(started) {
         trail.draw();
     }
+    //Draws the GUI
     gui.draw();
 }
 
@@ -77,6 +90,7 @@ void ofApp::keyPressed(int key){
    switch (key)
    {
    case 'r':
+   //What happens when you Reset
     seconds = 0;
     ticks = 0;
     started = false;
@@ -101,7 +115,8 @@ void ofApp::mouseMoved(int x, int y){
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-   if(button == 0) {
+    //Changes the sliders and hence the particle, when left clicking and Draging
+   if(button == 0) { //0 == LeftClick, 1 == middleClick, 2 == rightClick
     ySlider = y;
     xSlider = x;
    } 
