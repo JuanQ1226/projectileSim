@@ -28,6 +28,7 @@ class ofApp : public ofBaseApp{
 		ofxIntSlider aSlider;
 		ofxIntSlider vSlider;
 		ofxButton Reset;
+		ofxButton MaxH;
 		double seconds = 0;
 		double ticks = 0;
 		vector<RedParticle> particles;
@@ -35,8 +36,10 @@ class ofApp : public ofBaseApp{
 		double a = -9.81;
 		double xo = 145;
 		double yo = 370;
+		double MaxHeigh;
 		double angle = 30.0;
 		bool started = false;
+		bool showMH = false;
 		int FPS;
 		ofPolyline trail;  
 };

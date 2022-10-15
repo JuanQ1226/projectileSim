@@ -6,9 +6,12 @@ class RedParticle {
     private:
         double x;
         double y;
+        double yo;
         double vel;
         double acc;
         double direction;
+        double vx;
+        double vy;
 
     public:
         RedParticle(double x,double y, double speed,double acc,double angle) {
@@ -16,7 +19,11 @@ class RedParticle {
             this->y = y;
             this->acc = acc;
             this->vel = speed;
-            this->direction = angle;  
+            this->direction = angle;
+            this->vx = speed*cos(angle*PI/180); 
+            this->vx = speed*sin(angle*PI/180);
+            this->yo = y;
+
         }
         RedParticle() {
             this->x = 0.0;
@@ -37,6 +44,7 @@ class RedParticle {
         double getVel() {return this->vel;}
         double getAcc() {return this->acc;}
         double getAngle() {return direction;}
+        int maxHeight();
 
         void tick(double t);
         void draw();

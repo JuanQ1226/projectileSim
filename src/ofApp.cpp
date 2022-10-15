@@ -3,13 +3,14 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     //Sets up the GUI with all of its components
-    gui.setup();
+    gui.setup("","Parameters",ofGetWidth() - 40);
     gui.add(ySlider.setup("Initial Height",yo,0,ofGetHeight() - 20));
     gui.add(xSlider.setup("Initial Width",xo,0,ofGetWidth()));
     gui.add(aSlider.setup("Angle",angle,0,360));
     gui.add(vSlider.setup("Initial Velocity",vo,0,200));
     gui.add(Start.setup("Start"));
     gui.add(Reset.setup("Reset"));
+    gui.add(MaxH.setup("Get Max Height"));
     ///Sets Framerate to 165 FPS Note: This affects how fast the calculations are made
     FPS = 165;
     ofSetFrameRate(FPS);
@@ -26,6 +27,9 @@ void ofApp::update(){
         particles[0].setY(ySlider);
         particles[0].setAngle(aSlider);
         particles[0].setVel(vSlider);
+    }
+    if(MaxH) {
+        showMH = !showMH;
     }
     //When the start button is pressed the simulation starts
     if(Start) {
@@ -81,6 +85,10 @@ void ofApp::draw(){
     if(started) {
         trail.draw();
     }
+    if(showMH) {
+        ofSetColor(ofColor::red);
+        ofDrawBitmapString("Max Height: " + to_string(particles[0].maxHeight()),20,70);
+    }
     //Draws the GUI
     gui.draw();
 }
@@ -94,6 +102,7 @@ void ofApp::keyPressed(int key){
     seconds = 0;
     ticks = 0;
     started = false;
+    showMH = 0;
     trail.clear();
     break;
    
