@@ -3,7 +3,8 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     //Sets up the GUI with all of its components
-    gui.setup("","Parameters",ofGetWidth() - 40);
+    gui.setup("","Parameters",ofGetWidth() - 300,40);
+    gui.setFillColor(ofColor::aliceBlue);
     gui.add(ySlider.setup("Initial Height",yo,0,ofGetHeight() - 20));
     gui.add(xSlider.setup("Initial Width",xo,0,ofGetWidth()));
     gui.add(aSlider.setup("Angle",angle,0,360));
@@ -61,12 +62,23 @@ void ofApp::draw(){
     ofColor sky(138,213,255);
     ofColor atm(211,239,255);
     ofBackgroundGradient(atm,sky,OF_GRADIENT_LINEAR);
+    //Axis Arrows
+    ofSetColor(0);
+    ofFill();
+    ofVec3f y2(10,10,0);
+    ofVec3f y1(10,ofGetHeight() - 40,0);
+    ofDrawBitmapString("y",20,ofGetHeight() - 50);
+    ofDrawBitmapString("x",ofGetWidth() - 50, ofGetHeight() - 50);
+    ofDrawArrow(y1,y2,6);
+    ofVec3f x1(10,ofGetHeight() - 40,0);
+    ofVec3f x2(ofGetWidth() - 10,ofGetHeight() - 40,0);
+    ofDrawArrow(x1,x2,6);
     //Draws the particle
     particles[0].draw();
     //Draws the indicator text on the window
     ofSetColor(255,0,0);
     ofDrawBitmapString("x: "+to_string((int)particles[0].getX()),20,40);
-    ofDrawBitmapString("y: "+to_string((int)particles[0].getY()),20,50);
+    ofDrawBitmapString("y: "+to_string(ofGetHeight() - (int)particles[0].getY()),20,50);
     ofDrawBitmapString("vel: "+to_string((int)particles[0].getVel()),20,60);
     //Draws the ground
     ofSetColor(51,25,0);

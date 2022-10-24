@@ -4,7 +4,7 @@
 void RedParticle::tick(double t) {
     vx = vel*cos(direction*PI/180);
     vy = vel*sin(direction*PI/180);
-    if (x <= ofGetWidth() - 10 && y <= ofGetHeight() - 20) {
+    if (x <= ofGetWidth() - 10) {
         this->x  = x + vx * t; 
     }
     if(y <= ofGetHeight() - 20 && y > 0) {
@@ -20,6 +20,6 @@ void RedParticle::draw() {
 }
 
 int RedParticle::maxHeight() {
-    int max =  -pow(vel*sin(direction*PI/180),2) / (2*acc);
+    int max =  pow(vel*sin(direction*PI/180),2) / (2*acc);
     return yo + max;
 }
